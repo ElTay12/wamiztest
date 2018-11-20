@@ -1,0 +1,19 @@
+index:
+    path: /
+    controller: App\Controller\HomeController::index
+
+
+# Admin
+admin:
+  path: /admin
+  controller: App\Controller\HomeController::admin
+
+## Emailing Routes
+admin_emailing:
+  path: /admin/emailing
+  controller: App\Controller\EmailingController::index
+
+admin_emailing_delete:
+  path: /admin/emailing/{id}
+  controller: App\Controller\EmailingController::delete
+

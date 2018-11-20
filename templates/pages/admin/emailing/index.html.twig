@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1 class="display-4">Emailing : List ({{ mails|length }})</h1>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#sendNewsletter">
+                New Newsletter !
+            </button>
+    </div>
+
+    <div class="container-fluid mb-4 row">
+        <div class="col-md-6">
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-8">{{ form_row(form.email) }}</div>
+                </div>
+                <button class="btn btn-primary">Search !</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" width="10">#</th>
+                <th scope="col">Firstname</th>
+                <th scope="col">Lastname</th>
+                <th scope="col">Email</th>
+                <th scope="col">Created At</th>
+                <th scope="col" width="10"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for mail in mails %}
+                <tr>
+                    <td>{{ mail.id }}</td>
+                    <td>{{ mail.firstname }}</td>
+                    <td>{{ mail.lastname }}</td>
+                    <td>{{ mail.email }}</td>
+                    <td>{{ mail.createdAt|date('Y-m-d h:i:s') }}</td>
+                    <td><a href="{{ path('admin_emailing_delete', {id: mail.id}) }}" class="btn btn-danger btn-sm active" role="button" aria-pressed="true" onclick="return confirm('Are you sure ?');">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="sendNewsletter" tabindex="-1" role="dialog" aria-labelledby="sendNewsletterLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                {{ form_start(form_newsletter) }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sendNewsletterLabel">New Newsletter</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">{{ form_row(form_newsletter.title) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">{{ form_row(form_newsletter.body) }}</div>
+                    </div>
+                    {{ form_widget(form_newsletter) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary">Send !</button>
+                </div>
+
+                {{ form_end(form_newsletter) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

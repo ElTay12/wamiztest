@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Admin' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h1 class="display-4">Admin</h1>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="list-group col-md-4 col-sm-12">
+            <a href="{{ path('admin_emailing') }}" class="list-group-item list-group-item-action">Emailing</a>
+        </div>
+    </div>
+{% endblock %}

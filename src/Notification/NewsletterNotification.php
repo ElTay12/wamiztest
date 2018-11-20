@@ -22,6 +22,7 @@ class NewsletterNotification {
         $this->renderer = $renderer;
     }
 
+    // Method to send email
     public function notify(Newsletter $newsletter, $mail)
     {
         $message = (new \Swift_Message('Newsletter :' . $newsletter->getTitle()))

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\MailingType;
 use App\Repository\MailingRepository;
 use App\Entity\Mailing;
+
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use \Symfony\Component\HttpFoundation\Request;
@@ -20,11 +21,12 @@ class HomeController extends AbstractController
 
     public function index(Request $request): Response
     {
+        // Init form Sign in Newsletter
         $mailing = new Mailing();
-
         $form = $this->createForm(MailingType::class, $mailing);
         $form->handleRequest($request);
 
+        // If Submit newsletter
         if($form->isSubmitted() && $form->isValid()){
             $this->em->persist($mailing);
             $this->em->flush();

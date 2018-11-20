@@ -29,21 +29,23 @@ class EmailingController extends AbstractController
     public function index(Request $request, NewsletterNotification $notification): Response
     {
 
+        // Init form Searchmail
         $mailingSearch = new MailingSearch();
         $form = $this->createForm(MailingSearchType::class, $mailingSearch);
         $form->handleRequest($request);
 
+        // Init form Newsletter
         $newsletter = new Newsletter();
         $formNewsletter = $this->createForm(NewsletterType::class, $newsletter);
         $formNewsletter->handleRequest($request);
 
+        // If Newsletter send
         if($formNewsletter->isSubmitted() && $formNewsletter->isValid()){
 
             $send_mails = $this->repository->findAllVisible();
             foreach ($send_mails as $key => $mailing){
                 $notification->notify($newsletter, $mailing->getEmail());
             }
-
             $this->addFlash('success', 'Newsletter has been send ('.count($send_mails).')');
         }
 
@@ -56,6 +58,7 @@ class EmailingController extends AbstractController
         ]);
     }
 
+    // Method SoftDelete
     public function delete(Mailing $mailing){
 
         $mailing->setDeletedAt(new \DateTime());
